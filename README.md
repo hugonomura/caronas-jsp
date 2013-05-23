@@ -3,6 +3,27 @@
 Continuando nosso projeto de caronas, agora iremos usar **JSP**.  
 Iremos mexer no método **doPost** do *controller* `EfetuaLogin`, e caso o usuário seja `adm`, irão ser abertas novas opções no menu.  
   
+# Bean
+--
+A primeira coisa que devemos fazer é criar o bean que sera recuperado na view.  
+Para isso, basta clicar com o botão direito na raiz do projeto, selecionar a opção `Novo` > `Classe Java`.  
+Em `Nome da classe`, preencha com **Usuario** e em `Pacote`, preencha com **model**.  
+[<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img27.png">](#)  
+Clique em **Finalizar**.  
+  
+Dentro da classe criada, iremos precisar de dois atributos do tipo String, sendo um para sabermos o tipo do usuário e outro para sabermos o usuario.  
+Para isso, basta adicionarmos...  
+  
+    private String usuario;
+    private String tipo;
+  
+Como precisamos dos getters e setters, podemos usador o **gerador de código** do Netbeans. Para isso, basta usarmos o atalho `Alt` + `Insert`, selecionarmos a Opção **Getter e setter**.  
+Selecionar os campos que queremos os **Getters** e **Setters**, no nosso caso, todos os campos.  
+  
+[<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img28.png">](#)  
+  
+E clicar em **Gerar**.  
+  
 # doPost
 --
 Dentro do método **doPost**, remova as linhas de código que estiverem nela, deixando apenas a declaração do método.  
@@ -58,6 +79,19 @@ Mudar o nome do arquivo para viewLogado...
   
 E clicar em `Finalizar`.  
   
+Também devemos alterar o nome de **index.html** para **index.jsp**.  
+Para fazer isso, basta clicar com o botão direito sobre `index.html`, selecionar **Propiedades** > **Renomear**.  
+Alterar a extensão para **jsp**.  
+  
+[<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img26.png">](#)  
+  
+E clicar em **Fechar**.  
+Devemos fazer o mesmo com a página **cadastro.html**.  
+    
+Como realizamos essa alteração, precisamos arrumar nosso menu também para que nossa aplicação não quebre.  
+Devemos alterar as ocorrências de **index.html** e **cadastro.html** para **index.jsp** e **cadastro.jsp**, respectivamente.  
+Isso deve ser feito dentro das páginas **index.jsp** e **cadastro.jsp**.  
+  
 # Editando a view...
 --
 Agora que já temos a **view** criada, podemos editá-la de acordo com o que realmente queremos fazer.  
@@ -85,7 +119,7 @@ Ao fim desse tutorial, o método `doPost` do **servlet** `EfetuaLogin`, deve est
                       rd.forward(request, response);
                   }
             }else{
-                response.sendRedirect("/index.html");
+                response.sendRedirect("/index.jsp");
             }
 
         }
