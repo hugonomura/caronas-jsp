@@ -41,29 +41,28 @@ public class EfetuaLogin extends HttpServlet {
    * @throws IOException if an I/O error occurs
    */
 
-  @Override
-  protected void doPost(HttpServletRequest request, HttpServletResponse response)
-          throws ServletException, IOException {
-      String login = request.getParameter("login");
-      String senha = request.getParameter("senha");
-      
-      if(login.equals(senha)){
-            if(login.equals("adm")){
-                //vinculo o bean
-                
-                Usuario objUsuario=new Usuario();
-                objUsuario.setUsuario(login);
+@Override
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    String login = request.getParameter("login");
+    String senha = request.getParameter("senha");
 
-                // vincula bean
-                request.setAttribute("usuarioBean",objUsuario);
-         
-                RequestDispatcher rd = null;
-                rd = request.getRequestDispatcher("/viewLogado.jsp");
-                rd.forward(request, response);
-         } 
-      }
-      response.sendRedirect("index.jsp");
-  }
+    if(login.equals(senha)){
+
+              //vinculo o bean
+
+              Usuario objUsuario=new Usuario();
+              objUsuario.setUsuario(login);
+
+              // vincula bean
+              request.setAttribute("usuarioBean",objUsuario);
+
+              RequestDispatcher rd = null;
+              rd = request.getRequestDispatcher("/viewLogado.jsp");
+              rd.forward(request, response);
+    }
+    response.sendRedirect("index.jsp");
+}
   
 
   /**

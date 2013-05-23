@@ -13,23 +13,28 @@
       <nav id="menu">
         <ul>
             <% 
-                Usuario objUsuarioBean= (Usuario)request.getAttribute("usuarioBean");
+                Usuario objUsuarioBean = (Usuario)request.getAttribute("usuarioBean");
                 if (objUsuarioBean!=null){
-                 String usuario=objUsuarioBean.getUsuario();
-
+                 if(objUsuarioBean.getUsuario().equals("adm")){
               %>
             <li><a href="#.jsp" class="active">Autorização de usuário</a></li>
             <li><a href="#.jsp">Cadastro de Rotas</a></li>
-                     
+            <%
+                 }
+                }
+            %>
         </ul>
       </nav>
     </header>
     <section class="container">
       <article id="form">
         <header>
-          <h1>Bem vindo ao sistema de caronas <%= usuario%></h1>
-           <%            }    
-                else {      
+          <%
+          if(objUsuarioBean!=null){
+            %>
+          <h1>Bem vindo ao sistema de caronas <%= objUsuarioBean.getUsuario() %></h1>
+           <%   
+            }else {
             %>
             <h1>Erro no login!</h1>
             <p> <a href="index.jsp"> Voltar ao Login</a></p>
