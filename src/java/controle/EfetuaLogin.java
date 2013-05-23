@@ -62,7 +62,7 @@ public class EfetuaLogin extends HttpServlet {
                 rd.forward(request, response);
          } 
       }
-      response.sendRedirect("index.html");
+      response.sendRedirect("index.jsp");
   }
   
 

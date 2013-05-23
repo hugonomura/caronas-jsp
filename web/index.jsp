@@ -8,11 +8,11 @@
       </head>
       <body>
         <header class="container">
-          <h1 id="logo"><a href="index.html">Caronas</a></h1>
+          <h1 id="logo"><a href="index.jsp">Caronas</a></h1>
           <nav id="menu">
             <ul>
-              <li><a href="index.html" class="active">Inicio</a></li>
-              <li><a href="cad.html">Cadastro</a></li>
+              <li><a href="index.jsp" class="active">Inicio</a></li>
+              <li><a href="cadastro.jsp">Cadastro</a></li>
             </ul>
           </nav>
         </header>
