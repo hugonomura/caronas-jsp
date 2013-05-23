@@ -1,0 +1,251 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>Caronas-jsp</title>
+  <meta name="description" content="">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Caronas-jsp</h1>
+    </header>
+    <div id="container">
+      <p class="tagline"></p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/hugonomura/caronas-jsp/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/hugonomura/caronas-jsp/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/hugonomura/caronas-jsp" class="code">View Caronas-jsp on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>Caronas</h1>
+
+<h2></h2>
+
+<p>Continuando nosso projeto de caronas, agora iremos usar <strong>JSP</strong>.<br>
+Iremos mexer no método <strong>doPost</strong> do <em>controller</em> <code>EfetuaLogin</code>, e caso o usuário seja <code>adm</code>, irão ser abertas novas opções no menu.  </p>
+
+<h1>Bean</h1>
+
+<h2></h2>
+
+<p>A primeira coisa que devemos fazer é criar o bean que sera recuperado na view.<br>
+Para isso, basta clicar com o botão direito na raiz do projeto, selecionar a opção <code>Novo</code> &gt; <code>Classe Java</code>.<br>
+Em <code>Nome da classe</code>, preencha com <strong>Usuario</strong> e em <code>Pacote</code>, preencha com <strong>model</strong>.<br><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img27.png"></a><br>
+Clique em <strong>Finalizar</strong>.  </p>
+
+<p>Dentro da classe criada, iremos precisar de dois atributos do tipo String, sendo um para sabermos o tipo do usuário e outro para sabermos o usuario.<br>
+Para isso, basta adicionarmos...  </p>
+
+<pre><code>private String usuario;
+private String tipo;
+</code></pre>
+
+<p>Como precisamos dos getters e setters, podemos usador o <strong>gerador de código</strong> do Netbeans. Para isso, basta usarmos o atalho <code>Alt</code> + <code>Insert</code>, selecionarmos a Opção <strong>Getter e setter</strong>.<br>
+Selecionar os campos que queremos os <strong>Getters</strong> e <strong>Setters</strong>, no nosso caso, todos os campos.  </p>
+
+<p><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img28.png"></a>  </p>
+
+<p>E clicar em <strong>Gerar</strong>.  </p>
+
+<h1>doPost</h1>
+
+<h2></h2>
+
+<p>Dentro do método <strong>doPost</strong>, remova as linhas de código que estiverem nela, deixando apenas a declaração do método.<br><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img20.png"></a>  </p>
+
+<p>Vamos fazer a recuperação dos dados do formulário normalmente no <strong>servlet</strong>, da seguinte forma:  </p>
+
+<pre><code>  String login = request.getParameter("login");
+  String senha = request.getParameter("senha");
+</code></pre>
+
+<p>Podemos fazer também algum tipo de validação de <strong>login</strong> e <strong>senha</strong>, como ainda não temos acesso ao banco de dados, podemos verificar simplesmente se <strong>login</strong> e <strong>senha</strong> tem o mesmo valor, da seguinte forma:  </p>
+
+<pre><code>  if(login.equals(senha)){
+     // aqui faremos o redirecionamento para a página 'logado'
+  }else{
+     // aqui faremos o redirecionamento para a página de login
+  }
+</code></pre>
+
+<p>Agora, por uma questão de comodidade, faremos o redirecionamento de volta para a página de <strong>login</strong>, caso os campos <code>login</code> e <code>senha</code> não possuam o mesmo valor. Para isso, usaremos o método <code>sendRedirect</code>, que pertence ao objeto <strong>response</strong>.<br>
+Para isso, basta fazermos isso:  </p>
+
+<pre><code>  response.sendRedirect("/index.html");
+</code></pre>
+
+<p>Com isso feito, voltemos para o nosso <code>if(login.equals(senha))</code> para realizar o redirecionamento para a página logado.<br>
+Para fazermos isso, precisamos do método <code>foward</code> pertencente a classe <strong>RequestDispatcher</strong>. Basta criarmos uma instância da classe <strong>RequestDispatcher</strong>, da seguinte forma:  </p>
+
+<pre><code>  RequestDispatcher rd = null;
+</code></pre>
+
+<p>Provavelmente, o <strong>Netbeans</strong> está indicando um erro nessa linha, pois não realizamos o import dessa classe. Resolvemos isso criando o import para <strong>javax.servlet.RequestDispatcher</strong> (basta adicionar <code>import javax.servlet.RequestDispatcher;</code> junto aos imports no inicio da classe)...<br>
+ou podemos simplesmente clicar sobre o ícone apontando o erro na linha...<br><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img21.png"></a>  </p>
+
+<p>e pedir para a <strong>IDE</strong> realizar o import.<br><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img22.png"></a>  </p>
+
+<p>Podemos adicionar um novo atributo ao objeto <code>request</code>, que chamaremos de <strong>admin</strong> que caso ela seja <strong>true</strong>, significa que o <strong>usuário</strong> é um <strong>admin</strong> e, caso contrário, o <strong>usuário</strong> é um usuário comum do sistema, para isso basta fazermos isso:  </p>
+
+<pre><code>    request.setAttribute("admin", true);
+</code></pre>
+
+<p>Feito isso, já temos tudo que precisamos para fazermos o devido tratamento na <strong>view</strong>, nos restando apenas redirecionar a requisição para a <strong>view</strong> apropriada. Para isso basta usarmos o <strong>RequestDispatcher</strong>, da seguinte forma:  </p>
+
+<pre><code>     rd = request.getRequestDispatcher("/viewLogado.jsp");
+     rd.forward(request, response);
+</code></pre>
+
+<p>Assim, a nossa página <code>viewLogado</code> irá tratar a requisição.  </p>
+
+<h1>Criando a view...</h1>
+
+<h2></h2>
+
+<p>Para criar uma nova página <strong>JSP</strong>, basta clicarmos com o <strong>botão direito</strong> em <code>Páginas Web</code> &gt; <code>Novo</code> &gt; <code>JSP...</code>  </p>
+
+<p>Mudar o nome do arquivo para viewLogado...
+<a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img23.png"></a>  </p>
+
+<p>E clicar em <code>Finalizar</code>.  </p>
+
+<p>Também devemos alterar o nome de <strong>index.html</strong> para <strong>index.jsp</strong>.<br>
+Para fazer isso, basta clicar com o botão direito sobre <code>index.html</code>, selecionar <strong>Propiedades</strong> &gt; <strong>Renomear</strong>.<br>
+Alterar a extensão para <strong>jsp</strong>.  </p>
+
+<p><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img26.png"></a>  </p>
+
+<p>E clicar em <strong>Fechar</strong>.<br>
+Devemos fazer o mesmo com a página <strong>cadastro.html</strong>.  </p>
+
+<p>Como realizamos essa alteração, precisamos arrumar nosso menu também para que nossa aplicação não quebre.<br>
+Devemos alterar as ocorrências de <strong>index.html</strong> e <strong>cadastro.html</strong> para <strong>index.jsp</strong> e <strong>cadastro.jsp</strong>, respectivamente.<br>
+Isso deve ser feito dentro das páginas <strong>index.jsp</strong> e <strong>cadastro.jsp</strong>.  </p>
+
+<h1>Editando a view...</h1>
+
+<h2></h2>
+
+<p>Agora que já temos a <strong>view</strong> criada, podemos editá-la de acordo com o que realmente queremos fazer.<br>
+Podemos apagar todo o conteúdo do arquivo gerado e substituir pelo conteúdo do nosso <code>index.html</code>, apenas para termos um ponto de partida.<br>
+Como queremos editar o menu superior, devemos encontrar as linhas do menu e alterá-las para aparecer diferentes opções caso o usuário seja do tipo <strong>admin</strong>, conforme o <strong>atributo</strong> que registramos no nosso <strong>servlet</strong>.<br><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img24.png"></a>  </p>
+
+<p><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img25.png"></a>  </p>
+
+<h1>Resultado</h1>
+
+<h2></h2>
+
+<p>Ao fim desse tutorial, o método <code>doPost</code> do <strong>servlet</strong> <code>EfetuaLogin</code>, deve estar assim:  </p>
+
+<pre><code>    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String login = request.getParameter("login");
+        String senha = request.getParameter("senha");
+
+        if(login.equals(senha)){
+              if(login.equals("adm")){
+                  RequestDispatcher rd = null;
+                  request.setAttribute("admin", true);
+                  rd = request.getRequestDispatcher("/viewLogado.jsp");
+                  rd.forward(request, response);
+              }
+        }else{
+            response.sendRedirect("/index.jsp");
+        }
+
+    }
+</code></pre>
+
+<p>E a página <code>viewLogado</code>, deve estar assim:  </p>
+
+<pre><code>    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+      &lt;head&gt;
+        &lt;title&gt;Caronas | Inicio&lt;/title&gt;
+        &lt;meta charset="UTF-8"&gt;
+        &lt;link rel="stylesheet" type="text/css" href="estilo.css"&gt;
+        &lt;script src="http://code.jquery.com/jquery-1.9.1.js"&gt;&lt;/script&gt;
+      &lt;/head&gt;
+      &lt;body&gt;
+        &lt;header class="container"&gt;
+          &lt;h1 id="logo"&gt;&lt;a href="index.html"&gt;Caronas&lt;/a&gt;&lt;/h1&gt;
+          &lt;nav id="menu"&gt;
+            &lt;ul&gt;
+                &lt;% 
+                    if(request.getParameter("admin")){
+                  %&gt;
+                &lt;li&gt;&lt;a href="#.html" class="active"&gt;Autorização de usuário&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#.html"&gt;Cadastro de Rotas&lt;/a&gt;&lt;/li&gt;
+                &lt;%
+                    }
+                  %&gt;
+            &lt;/ul&gt;
+          &lt;/nav&gt;
+        &lt;/header&gt;
+        &lt;section class="container"&gt;
+          &lt;article id="form"&gt;
+            &lt;header&gt;
+              &lt;h1&gt;Login&lt;/h1&gt;
+            &lt;/header&gt;
+            &lt;form method="post" action="EfetuaLogin"&gt;
+              &lt;p&gt;&lt;label for="login"&gt;Login&lt;/label&gt;&lt;input type="text" id="login" name="login"&gt;&lt;/p&gt;
+              &lt;p&gt;&lt;label for="senha"&gt;Senha&lt;/label&gt;&lt;input type="password" id="senha" name="senha"&gt;&lt;/p&gt;
+              &lt;p&gt;&lt;input type="submit" value="Logar!"&gt;&lt;/p&gt;
+            &lt;/form&gt;
+          &lt;/article&gt;
+        &lt;/section&gt;
+        &lt;footer class="container"&gt;
+          &lt;p&gt;Desenvolvimento Web - UFSCar Sorocaba - 2013&lt;/p&gt;
+        &lt;/footer&gt;
+        &lt;script&gt;
+          $(document).ready(function(){
+
+          });
+        &lt;/script&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+</code></pre>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/hugonomura" class="avatar"><img src="https://secure.gravatar.com/avatar/aba3372625d61846c87c2f8b6cd50659?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a> <a href="https://github.com/hugonomura">hugonomura</a> maintains <a href="https://github.com/hugonomura/caronas-jsp">Caronas-jsp</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/hugonomura/caronas-jsp/tarball/master" class="tar">tar</a><a href="https://github.com/hugonomura/caronas-jsp/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
+</html>
