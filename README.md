@@ -104,11 +104,39 @@ Isso deve ser feito dentro das páginas **index.jsp** e **cadastro.jsp**.
 ## Editando a view...
 Agora que já temos a **view** criada, podemos editá-la de acordo com o que realmente queremos fazer.  
 Podemos apagar todo o conteúdo do arquivo gerado e substituir pelo conteúdo do nosso `index.jsp`, apenas para termos um ponto de partida.  
-Como queremos
-Como queremos editar o menu superior, devemos encontrar as linhas do menu e alterá-las para aparecer diferentes opções caso o usuário seja do tipo **admin**, conforme o **atributo** que registramos no nosso **servlet**.  
-[<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img24.png">](#)  
+Como queremos editar o menu superior, devemos encontrar as linhas do menu e alterá-las para aparecer diferentes opções caso o usuário seja do tipo **adm**, conforme o **atributo** que registramos no nosso **servlet**.  
+Para isso, basta substituir o conteúdo do menu pelo conteúdo abaixo.  
   
-[<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img25.png">](#)  
+            <% 
+                Usuario objUsuarioBean = (Usuario)request.getAttribute("usuarioBean");
+                if (objUsuarioBean!=null){
+                 if(objUsuarioBean.getUsuario().equals("adm")){
+              %>
+            <li><a href="#.jsp" class="active">Autorização de usuário</a></li>
+            <li><a href="#.jsp">Cadastro de Rotas</a></li>
+            <%
+                 }
+                }
+            %>
+  
+Explicando, o `request.getAtribute` é igual ao que faziamos no **servlet**, mas como iremos colocar em uma instancia de **Usuario**, devemos fazer um cast.  
+  
+Também temos que alterar o conteúdo do `article`, iremos apenas mostrar uma mensagem de boas vindas para o usuario logado, para isso, devemos fazer o seguinte:  
+  
+        <header>
+          <%
+          if(objUsuarioBean!=null){
+            %>
+          <h1>Bem vindo ao sistema de caronas <%= objUsuarioBean.getUsuario() %></h1>
+           <%   
+            }else {
+            %>
+            <h1>Erro no login!</h1>
+            <p> <a href="index.jsp"> Voltar ao Login</a></p>
+             <%      }         %>
+        </header>
+  
+Explicando, estamos apenas fazendo uma verificação, onde, caso tenha ocorrido algum problema para instanciar `objUsuarioBean`, é mostrada uma mensagem de erro e, caso contrário, mostrada a mensagem de boas vindas.  
   
 --
 # Resultado
@@ -121,22 +149,27 @@ Ao fim desse tutorial, o método `doPost` do **servlet** `EfetuaLogin`, deve est
             String senha = request.getParameter("senha");
 
             if(login.equals(senha)){
-                  if(login.equals("adm")){
+
+                      //vinculo o bean
+
+                      Usuario objUsuario=new Usuario();
+                      objUsuario.setUsuario(login);
+
+                      // vincula bean
+                      request.setAttribute("usuarioBean",objUsuario);
+
                       RequestDispatcher rd = null;
-                      request.setAttribute("admin", true);
                       rd = request.getRequestDispatcher("/viewLogado.jsp");
                       rd.forward(request, response);
-                  }
-            }else{
-                response.sendRedirect("/index.jsp");
             }
-
+            response.sendRedirect("index.jsp");
         }
   
   
 E a página `viewLogado`, deve estar assim:  
   
         <!DOCTYPE html>
+        <%@page import="model.Usuario" %>
         <html>
           <head>
             <title>Caronas | Inicio</title>
@@ -146,31 +179,38 @@ E a página `viewLogado`, deve estar assim:
           </head>
           <body>
             <header class="container">
-              <h1 id="logo"><a href="index.html">Caronas</a></h1>
+              <h1 id="logo"><a href="index.jsp">Caronas</a></h1>
               <nav id="menu">
                 <ul>
                     <% 
-                        if(request.getParameter("admin")){
+                        Usuario objUsuarioBean = (Usuario)request.getAttribute("usuarioBean");
+                        if (objUsuarioBean!=null){
+                         if(objUsuarioBean.getUsuario().equals("adm")){
                       %>
-                    <li><a href="#.html" class="active">Autorização de usuário</a></li>
-                    <li><a href="#.html">Cadastro de Rotas</a></li>
+                    <li><a href="#.jsp" class="active">Autorização de usuário</a></li>
+                    <li><a href="#.jsp">Cadastro de Rotas</a></li>
                     <%
+                         }
                         }
-                      %>
+                    %>
                 </ul>
               </nav>
             </header>
             <section class="container">
               <article id="form">
                 <header>
-                  <h1>Login</h1>
+                  <%
+                  if(objUsuarioBean!=null){
+                    %>
+                  <h1>Bem vindo ao sistema de caronas <%= objUsuarioBean.getUsuario() %></h1>
+                   <%   
+                    }else {
+                    %>
+                    <h1>Erro no login!</h1>
+                    <p> <a href="index.jsp"> Voltar ao Login</a></p>
+                     <%      }         %>
                 </header>
-                <form method="post" action="EfetuaLogin">
-                  <p><label for="login">Login</label><input type="text" id="login" name="login"></p>
-                  <p><label for="senha">Senha</label><input type="password" id="senha" name="senha"></p>
-                  <p><input type="submit" value="Logar!"></p>
-                </form>
-              </article>
+               </article>
             </section>
             <footer class="container">
               <p>Desenvolvimento Web - UFSCar Sorocaba - 2013</p>
@@ -183,3 +223,13 @@ E a página `viewLogado`, deve estar assim:
           </body>
         </html>
   
+--
+## Imagens
+  
+Quando o usuário entrar com o valor **adm** no campo `login` e **adm** no campo `senha`, o resultado deve ser:  
+[<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/adm.png">](#)  
+  
+Quando o usuário entrar com os mesmos valores em `login` e `senha`, sendo que o valor dos campos é diferente de **adm**, o resultado deve ser:  
+[<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/naoAdm.png">](#)  
+  
+Nos outros casos, deve ser mostrada a tela de login, normalmente.  
