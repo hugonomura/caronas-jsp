@@ -1,9 +1,9 @@
-# Caronas
+## Caronas
 --
 Continuando nosso projeto de caronas, agora iremos usar **JSP**.  
 Iremos mexer no método **doPost** do *controller* `EfetuaLogin`, e caso o usuário seja `adm`, irão ser abertas novas opções no menu.  
   
-# Bean
+## Bean
 --
 A primeira coisa que devemos fazer é criar o bean que sera recuperado na view.  
 Para isso, basta clicar com o botão direito na raiz do projeto, selecionar a opção `Novo` > `Classe Java`.  
@@ -24,9 +24,9 @@ Selecionar os campos que queremos os **Getters** e **Setters**, no nosso caso, t
   
 E clicar em **Gerar**.  
   
-# doPost
+## doPost
 --
-Dentro do método **doPost**, remova as linhas de código que estiverem nela, deixando apenas a declaração do método.  
+Dentro do método **doPost** (que está dentro do servlet `EfetuaLogin`), remova as linhas de código que estiverem nela, deixando apenas a declaração do método.  
 [<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img20.png">](#)  
   
 Vamos fazer a recuperação dos dados do formulário normalmente no **servlet**, da seguinte forma:  
@@ -38,39 +38,47 @@ Podemos fazer também algum tipo de validação de **login** e **senha**, como a
   
       if(login.equals(senha)){
          // aqui faremos o redirecionamento para a página 'logado'
-      }else{
-         // aqui faremos o redirecionamento para a página de login
       }
+      // aqui faremos o redirecionamento para a página de login
+  
   
 Agora, por uma questão de comodidade, faremos o redirecionamento de volta para a página de **login**, caso os campos `login` e `senha` não possuam o mesmo valor. Para isso, usaremos o método `sendRedirect`, que pertence ao objeto **response**.  
 Para isso, basta fazermos isso:  
   
-      response.sendRedirect("/index.html");
+      response.sendRedirect("/index.jsp");
   
 Com isso feito, voltemos para o nosso `if(login.equals(senha))` para realizar o redirecionamento para a página logado.  
-Para fazermos isso, precisamos do método `foward` pertencente a classe **RequestDispatcher**. Basta criarmos uma instância da classe **RequestDispatcher**, da seguinte forma:  
+Primeiro, temos que criar uma instancia de Usuario e retornar os dados para a view através dela. Isso é feito da seguinte forma:  
+  
+                Usuario objUsuario=new Usuario();
+                objUsuario.setUsuario(login);
+  
+Provavelmente, o **Netbeans** está indicando um erro nessa linha, pois não realizamos o import dessa classe. Resolvemos isso realizando o import no inicio do arquivo.  
+  
+    import model.Usuario;
+  
+O objeto ainda não está disponível na view, para que ele esteja acessível na view, devemos colocar o objeto instanciando em um atributo, da seguinte forma:  
+  
+    request.setAttribute("usuarioBean",objUsuario);
+  
+Sendo que, na view iremos recuperar o objeto usando o nome **usuarioBean**.  
+Para fazermos o redirecionamento, precisamos do método `foward` pertencente a classe **RequestDispatcher**. Basta criarmos uma instância da classe **RequestDispatcher**, da seguinte forma:  
   
       RequestDispatcher rd = null;
   
-Provavelmente, o **Netbeans** está indicando um erro nessa linha, pois não realizamos o import dessa classe. Resolvemos isso criando o import para **javax.servlet.RequestDispatcher** (basta adicionar `import javax.servlet.RequestDispatcher;` junto aos imports no inicio da classe)...  
+Provavelmente, o **Netbeans** está indicando um erro nessa linha, pois, novamente, não realizamos o import dessa classe. Resolvemos isso criando o import para **javax.servlet.RequestDispatcher** (basta adicionar `import javax.servlet.RequestDispatcher;` junto aos imports no inicio da classe)...  
 ou podemos simplesmente clicar sobre o ícone apontando o erro na linha...  
 [<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img21.png">](#)  
   
  e pedir para a **IDE** realizar o import.  
 [<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img22.png">](#)  
   
-Podemos adicionar um novo atributo ao objeto `request`, que chamaremos de **admin** que caso ela seja **true**, significa que o **usuário** é um **admin** e, caso contrário, o **usuário** é um usuário comum do sistema, para isso basta fazermos isso:  
-  
-        request.setAttribute("admin", true);
-  
-Feito isso, já temos tudo que precisamos para fazermos o devido tratamento na **view**, nos restando apenas redirecionar a requisição para a **view** apropriada. Para isso basta usarmos o **RequestDispatcher**, da seguinte forma:  
-  
          rd = request.getRequestDispatcher("/viewLogado.jsp");
          rd.forward(request, response);
   
 Assim, a nossa página `viewLogado` irá tratar a requisição.  
   
-# Criando a view...
+## Criando a view...
 --
 Para criar uma nova página **JSP**, basta clicarmos com o **botão direito** em `Páginas Web` > `Novo` > `JSP...`  
   
@@ -92,10 +100,11 @@ Como realizamos essa alteração, precisamos arrumar nosso menu também para que
 Devemos alterar as ocorrências de **index.html** e **cadastro.html** para **index.jsp** e **cadastro.jsp**, respectivamente.  
 Isso deve ser feito dentro das páginas **index.jsp** e **cadastro.jsp**.  
   
-# Editando a view...
+## Editando a view...
 --
 Agora que já temos a **view** criada, podemos editá-la de acordo com o que realmente queremos fazer.  
-Podemos apagar todo o conteúdo do arquivo gerado e substituir pelo conteúdo do nosso `index.html`, apenas para termos um ponto de partida.  
+Podemos apagar todo o conteúdo do arquivo gerado e substituir pelo conteúdo do nosso `index.jsp`, apenas para termos um ponto de partida.  
+Como queremos
 Como queremos editar o menu superior, devemos encontrar as linhas do menu e alterá-las para aparecer diferentes opções caso o usuário seja do tipo **admin**, conforme o **atributo** que registramos no nosso **servlet**.  
 [<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img24.png">](#)  
   
