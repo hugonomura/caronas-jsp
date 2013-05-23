@@ -10,23 +10,22 @@ package model;
  */
 public class Usuario {
     private String usuario;
-
-    public String getTipo() {
-        return tipo;
-    }
     private String tipo;
+
+    public String getUsuario() {
+        return usuario;
+    }
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
-    public String getUsuario(){
-        return usuario;
-    }
-    
     
 }
