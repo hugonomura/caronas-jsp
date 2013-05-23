@@ -36,16 +36,16 @@
         <span class="blc"></span><span class="trc"></span>
         </div>
         <article class="markdown-body">
-          <h1>Caronas</h1>
+          <h2>Caronas</h2>
 
 <h2></h2>
 
 <p>Continuando nosso projeto de caronas, agora iremos usar <strong>JSP</strong>.<br>
 Iremos mexer no método <strong>doPost</strong> do <em>controller</em> <code>EfetuaLogin</code>, e caso o usuário seja <code>adm</code>, irão ser abertas novas opções no menu.  </p>
 
-<h1>Bean</h1>
-
 <h2></h2>
+
+<h2>Bean</h2>
 
 <p>A primeira coisa que devemos fazer é criar o bean que sera recuperado na view.<br>
 Para isso, basta clicar com o botão direito na raiz do projeto, selecionar a opção <code>Novo</code> &gt; <code>Classe Java</code>.<br>
@@ -66,11 +66,11 @@ Selecionar os campos que queremos os <strong>Getters</strong> e <strong>Setters<
 
 <p>E clicar em <strong>Gerar</strong>.  </p>
 
-<h1>doPost</h1>
-
 <h2></h2>
 
-<p>Dentro do método <strong>doPost</strong>, remova as linhas de código que estiverem nela, deixando apenas a declaração do método.<br><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img20.png"></a>  </p>
+<h2>doPost</h2>
+
+<p>Dentro do método <strong>doPost</strong> (que está dentro do servlet <code>EfetuaLogin</code>), remova as linhas de código que estiverem nela, deixando apenas a declaração do método.<br><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img20.png"></a>  </p>
 
 <p>Vamos fazer a recuperação dos dados do formulário normalmente no <strong>servlet</strong>, da seguinte forma:  </p>
 
@@ -82,34 +82,43 @@ Selecionar os campos que queremos os <strong>Getters</strong> e <strong>Setters<
 
 <pre><code>  if(login.equals(senha)){
      // aqui faremos o redirecionamento para a página 'logado'
-  }else{
-     // aqui faremos o redirecionamento para a página de login
   }
+  // aqui faremos o redirecionamento para a página de login
 </code></pre>
 
 <p>Agora, por uma questão de comodidade, faremos o redirecionamento de volta para a página de <strong>login</strong>, caso os campos <code>login</code> e <code>senha</code> não possuam o mesmo valor. Para isso, usaremos o método <code>sendRedirect</code>, que pertence ao objeto <strong>response</strong>.<br>
 Para isso, basta fazermos isso:  </p>
 
-<pre><code>  response.sendRedirect("/index.html");
+<pre><code>  response.sendRedirect("/index.jsp");
 </code></pre>
 
 <p>Com isso feito, voltemos para o nosso <code>if(login.equals(senha))</code> para realizar o redirecionamento para a página logado.<br>
-Para fazermos isso, precisamos do método <code>foward</code> pertencente a classe <strong>RequestDispatcher</strong>. Basta criarmos uma instância da classe <strong>RequestDispatcher</strong>, da seguinte forma:  </p>
+Primeiro, temos que criar uma instancia de Usuario e retornar os dados para a view através dela. Isso é feito da seguinte forma:  </p>
+
+<pre><code>            Usuario objUsuario=new Usuario();
+            objUsuario.setUsuario(login);
+</code></pre>
+
+<p>Provavelmente, o <strong>Netbeans</strong> está indicando um erro nessa linha, pois não realizamos o import dessa classe. Resolvemos isso realizando o import no inicio do arquivo.  </p>
+
+<pre><code>import model.Usuario;
+</code></pre>
+
+<p>O objeto ainda não está disponível na view, para que ele esteja acessível na view, devemos colocar o objeto instanciando em um atributo, da seguinte forma:  </p>
+
+<pre><code>request.setAttribute("usuarioBean",objUsuario);
+</code></pre>
+
+<p>Sendo que, na view iremos recuperar o objeto usando o nome <strong>usuarioBean</strong>.<br>
+Para fazermos o redirecionamento, precisamos do método <code>foward</code> pertencente a classe <strong>RequestDispatcher</strong>. Basta criarmos uma instância da classe <strong>RequestDispatcher</strong>, da seguinte forma:  </p>
 
 <pre><code>  RequestDispatcher rd = null;
 </code></pre>
 
-<p>Provavelmente, o <strong>Netbeans</strong> está indicando um erro nessa linha, pois não realizamos o import dessa classe. Resolvemos isso criando o import para <strong>javax.servlet.RequestDispatcher</strong> (basta adicionar <code>import javax.servlet.RequestDispatcher;</code> junto aos imports no inicio da classe)...<br>
+<p>Provavelmente, o <strong>Netbeans</strong> está indicando um erro nessa linha, pois, novamente, não realizamos o import dessa classe. Resolvemos isso criando o import para <strong>javax.servlet.RequestDispatcher</strong> (basta adicionar <code>import javax.servlet.RequestDispatcher;</code> junto aos imports no inicio da classe)...<br>
 ou podemos simplesmente clicar sobre o ícone apontando o erro na linha...<br><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img21.png"></a>  </p>
 
 <p>e pedir para a <strong>IDE</strong> realizar o import.<br><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img22.png"></a>  </p>
-
-<p>Podemos adicionar um novo atributo ao objeto <code>request</code>, que chamaremos de <strong>admin</strong> que caso ela seja <strong>true</strong>, significa que o <strong>usuário</strong> é um <strong>admin</strong> e, caso contrário, o <strong>usuário</strong> é um usuário comum do sistema, para isso basta fazermos isso:  </p>
-
-<pre><code>    request.setAttribute("admin", true);
-</code></pre>
-
-<p>Feito isso, já temos tudo que precisamos para fazermos o devido tratamento na <strong>view</strong>, nos restando apenas redirecionar a requisição para a <strong>view</strong> apropriada. Para isso basta usarmos o <strong>RequestDispatcher</strong>, da seguinte forma:  </p>
 
 <pre><code>     rd = request.getRequestDispatcher("/viewLogado.jsp");
      rd.forward(request, response);
@@ -117,9 +126,9 @@ ou podemos simplesmente clicar sobre o ícone apontando o erro na linha...<br><a
 
 <p>Assim, a nossa página <code>viewLogado</code> irá tratar a requisição.  </p>
 
-<h1>Criando a view...</h1>
-
 <h2></h2>
+
+<h2>Criando a view...</h2>
 
 <p>Para criar uma nova página <strong>JSP</strong>, basta clicarmos com o <strong>botão direito</strong> em <code>Páginas Web</code> &gt; <code>Novo</code> &gt; <code>JSP...</code>  </p>
 
@@ -141,19 +150,51 @@ Devemos fazer o mesmo com a página <strong>cadastro.html</strong>.  </p>
 Devemos alterar as ocorrências de <strong>index.html</strong> e <strong>cadastro.html</strong> para <strong>index.jsp</strong> e <strong>cadastro.jsp</strong>, respectivamente.<br>
 Isso deve ser feito dentro das páginas <strong>index.jsp</strong> e <strong>cadastro.jsp</strong>.  </p>
 
-<h1>Editando a view...</h1>
-
 <h2></h2>
+
+<h2>Editando a view...</h2>
 
 <p>Agora que já temos a <strong>view</strong> criada, podemos editá-la de acordo com o que realmente queremos fazer.<br>
-Podemos apagar todo o conteúdo do arquivo gerado e substituir pelo conteúdo do nosso <code>index.html</code>, apenas para termos um ponto de partida.<br>
-Como queremos editar o menu superior, devemos encontrar as linhas do menu e alterá-las para aparecer diferentes opções caso o usuário seja do tipo <strong>admin</strong>, conforme o <strong>atributo</strong> que registramos no nosso <strong>servlet</strong>.<br><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img24.png"></a>  </p>
+Podemos apagar todo o conteúdo do arquivo gerado e substituir pelo conteúdo do nosso <code>index.jsp</code>, apenas para termos um ponto de partida.<br>
+Como queremos editar o menu superior, devemos encontrar as linhas do menu e alterá-las para aparecer diferentes opções caso o usuário seja do tipo <strong>adm</strong>, conforme o <strong>atributo</strong> que registramos no nosso <strong>servlet</strong>.<br>
+Para isso, basta substituir o conteúdo do menu pelo conteúdo abaixo.  </p>
 
-<p><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img25.png"></a>  </p>
+<pre><code>        &lt;% 
+            Usuario objUsuarioBean = (Usuario)request.getAttribute("usuarioBean");
+            if (objUsuarioBean!=null){
+             if(objUsuarioBean.getUsuario().equals("adm")){
+          %&gt;
+        &lt;li&gt;&lt;a href="#.jsp" class="active"&gt;Autorização de usuário&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#.jsp"&gt;Cadastro de Rotas&lt;/a&gt;&lt;/li&gt;
+        &lt;%
+             }
+            }
+        %&gt;
+</code></pre>
 
-<h1>Resultado</h1>
+<p>Explicando, o <code>request.getAtribute</code> é igual ao que faziamos no <strong>servlet</strong>, mas como iremos colocar em uma instancia de <strong>Usuario</strong>, devemos fazer um cast.  </p>
+
+<p>Também temos que alterar o conteúdo do <code>article</code>, iremos apenas mostrar uma mensagem de boas vindas para o usuario logado, para isso, devemos fazer o seguinte:  </p>
+
+<pre><code>    &lt;header&gt;
+      &lt;%
+      if(objUsuarioBean!=null){
+        %&gt;
+      &lt;h1&gt;Bem vindo ao sistema de caronas &lt;%= objUsuarioBean.getUsuario() %&gt;&lt;/h1&gt;
+       &lt;%   
+        }else {
+        %&gt;
+        &lt;h1&gt;Erro no login!&lt;/h1&gt;
+        &lt;p&gt; &lt;a href="index.jsp"&gt; Voltar ao Login&lt;/a&gt;&lt;/p&gt;
+         &lt;%      }         %&gt;
+    &lt;/header&gt;
+</code></pre>
+
+<p>Explicando, estamos apenas fazendo uma verificação, onde, caso tenha ocorrido algum problema para instanciar <code>objUsuarioBean</code>, é mostrada uma mensagem de erro e, caso contrário, mostrada a mensagem de boas vindas.  </p>
 
 <h2></h2>
+
+<h1>Resultado</h1>
 
 <p>Ao fim desse tutorial, o método <code>doPost</code> do <strong>servlet</strong> <code>EfetuaLogin</code>, deve estar assim:  </p>
 
@@ -164,22 +205,27 @@ Como queremos editar o menu superior, devemos encontrar as linhas do menu e alte
         String senha = request.getParameter("senha");
 
         if(login.equals(senha)){
-              if(login.equals("adm")){
+
+                  //vinculo o bean
+
+                  Usuario objUsuario=new Usuario();
+                  objUsuario.setUsuario(login);
+
+                  // vincula bean
+                  request.setAttribute("usuarioBean",objUsuario);
+
                   RequestDispatcher rd = null;
-                  request.setAttribute("admin", true);
                   rd = request.getRequestDispatcher("/viewLogado.jsp");
                   rd.forward(request, response);
-              }
-        }else{
-            response.sendRedirect("/index.jsp");
         }
-
+        response.sendRedirect("index.jsp");
     }
 </code></pre>
 
 <p>E a página <code>viewLogado</code>, deve estar assim:  </p>
 
 <pre><code>    &lt;!DOCTYPE html&gt;
+    &lt;%@page import="model.Usuario" %&gt;
     &lt;html&gt;
       &lt;head&gt;
         &lt;title&gt;Caronas | Inicio&lt;/title&gt;
@@ -189,31 +235,38 @@ Como queremos editar o menu superior, devemos encontrar as linhas do menu e alte
       &lt;/head&gt;
       &lt;body&gt;
         &lt;header class="container"&gt;
-          &lt;h1 id="logo"&gt;&lt;a href="index.html"&gt;Caronas&lt;/a&gt;&lt;/h1&gt;
+          &lt;h1 id="logo"&gt;&lt;a href="index.jsp"&gt;Caronas&lt;/a&gt;&lt;/h1&gt;
           &lt;nav id="menu"&gt;
             &lt;ul&gt;
                 &lt;% 
-                    if(request.getParameter("admin")){
+                    Usuario objUsuarioBean = (Usuario)request.getAttribute("usuarioBean");
+                    if (objUsuarioBean!=null){
+                     if(objUsuarioBean.getUsuario().equals("adm")){
                   %&gt;
-                &lt;li&gt;&lt;a href="#.html" class="active"&gt;Autorização de usuário&lt;/a&gt;&lt;/li&gt;
-                &lt;li&gt;&lt;a href="#.html"&gt;Cadastro de Rotas&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#.jsp" class="active"&gt;Autorização de usuário&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#.jsp"&gt;Cadastro de Rotas&lt;/a&gt;&lt;/li&gt;
                 &lt;%
+                     }
                     }
-                  %&gt;
+                %&gt;
             &lt;/ul&gt;
           &lt;/nav&gt;
         &lt;/header&gt;
         &lt;section class="container"&gt;
           &lt;article id="form"&gt;
             &lt;header&gt;
-              &lt;h1&gt;Login&lt;/h1&gt;
+              &lt;%
+              if(objUsuarioBean!=null){
+                %&gt;
+              &lt;h1&gt;Bem vindo ao sistema de caronas &lt;%= objUsuarioBean.getUsuario() %&gt;&lt;/h1&gt;
+               &lt;%   
+                }else {
+                %&gt;
+                &lt;h1&gt;Erro no login!&lt;/h1&gt;
+                &lt;p&gt; &lt;a href="index.jsp"&gt; Voltar ao Login&lt;/a&gt;&lt;/p&gt;
+                 &lt;%      }         %&gt;
             &lt;/header&gt;
-            &lt;form method="post" action="EfetuaLogin"&gt;
-              &lt;p&gt;&lt;label for="login"&gt;Login&lt;/label&gt;&lt;input type="text" id="login" name="login"&gt;&lt;/p&gt;
-              &lt;p&gt;&lt;label for="senha"&gt;Senha&lt;/label&gt;&lt;input type="password" id="senha" name="senha"&gt;&lt;/p&gt;
-              &lt;p&gt;&lt;input type="submit" value="Logar!"&gt;&lt;/p&gt;
-            &lt;/form&gt;
-          &lt;/article&gt;
+           &lt;/article&gt;
         &lt;/section&gt;
         &lt;footer class="container"&gt;
           &lt;p&gt;Desenvolvimento Web - UFSCar Sorocaba - 2013&lt;/p&gt;
@@ -226,6 +279,16 @@ Como queremos editar o menu superior, devemos encontrar as linhas do menu e alte
       &lt;/body&gt;
     &lt;/html&gt;
 </code></pre>
+
+<h2></h2>
+
+<h2>Imagens</h2>
+
+<p>Quando o usuário entrar com o valor <strong>adm</strong> no campo <code>login</code> e <strong>adm</strong> no campo <code>senha</code>, o resultado deve ser:<br><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/adm.png"></a>  </p>
+
+<p>Quando o usuário entrar com os mesmos valores em <code>login</code> e <code>senha</code>, sendo que o valor dos campos é diferente de <strong>adm</strong>, o resultado deve ser:<br><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/naoAdm.png"></a>  </p>
+
+<p>Nos outros casos, deve ser mostrada a tela de login, normalmente.  </p>
         </article>
       </div>
     </div>
