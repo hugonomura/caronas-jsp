@@ -3,8 +3,8 @@
 Continuando nosso projeto de caronas, agora iremos usar **JSP**.  
 Iremos mexer no método **doPost** do *controller* `EfetuaLogin`, e caso o usuário seja `adm`, irão ser abertas novas opções no menu.  
   
-## Bean
 --
+## Bean
 A primeira coisa que devemos fazer é criar o bean que sera recuperado na view.  
 Para isso, basta clicar com o botão direito na raiz do projeto, selecionar a opção `Novo` > `Classe Java`.  
 Em `Nome da classe`, preencha com **Usuario** e em `Pacote`, preencha com **model**.  
@@ -24,8 +24,8 @@ Selecionar os campos que queremos os **Getters** e **Setters**, no nosso caso, t
   
 E clicar em **Gerar**.  
   
-## doPost
 --
+## doPost
 Dentro do método **doPost** (que está dentro do servlet `EfetuaLogin`), remova as linhas de código que estiverem nela, deixando apenas a declaração do método.  
 [<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img20.png">](#)  
   
@@ -78,8 +78,8 @@ ou podemos simplesmente clicar sobre o ícone apontando o erro na linha...
   
 Assim, a nossa página `viewLogado` irá tratar a requisição.  
   
-## Criando a view...
 --
+## Criando a view...
 Para criar uma nova página **JSP**, basta clicarmos com o **botão direito** em `Páginas Web` > `Novo` > `JSP...`  
   
 Mudar o nome do arquivo para viewLogado...
@@ -100,8 +100,8 @@ Como realizamos essa alteração, precisamos arrumar nosso menu também para que
 Devemos alterar as ocorrências de **index.html** e **cadastro.html** para **index.jsp** e **cadastro.jsp**, respectivamente.  
 Isso deve ser feito dentro das páginas **index.jsp** e **cadastro.jsp**.  
   
-## Editando a view...
 --
+## Editando a view...
 Agora que já temos a **view** criada, podemos editá-la de acordo com o que realmente queremos fazer.  
 Podemos apagar todo o conteúdo do arquivo gerado e substituir pelo conteúdo do nosso `index.jsp`, apenas para termos um ponto de partida.  
 Como queremos
@@ -110,8 +110,8 @@ Como queremos editar o menu superior, devemos encontrar as linhas do menu e alte
   
 [<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img25.png">](#)  
   
-# Resultado
 --
+# Resultado
 Ao fim desse tutorial, o método `doPost` do **servlet** `EfetuaLogin`, deve estar assim:  
   
         @Override
