@@ -25,8 +25,8 @@ and open the template in the editor.
         <header>
           <h1>Cadastro</h1>
         </header>
-        <form autocomplete="on">
-          <p><span class="rotulo"><label for="username">Nome de usuario</label></span><span class="campo"><input type="text" id="username"></span></p>
+          <form autocomplete="on" action="CadastraUsuario" method="post">
+          <p><span class="rotulo"><label for="username">Nome de usuario</label></span><span class="campo"><input type="text" id="username" name="username"></span></p>
           <p><span class="rotulo"><label for="email">E-mail</label></span><span class="campo"><input type="email" id="email"></span></p>
           <p><span class="rotulo"><label for="pwd">Senha</label></span><span class="campo"><input type="password" id="pwd"></span></p>
           <p><span class="rotulo"><label for="conf-pwd">Confirmar senha</label></span><span class="campo"><input type="password" id="conf-pwd"></span></p>
@@ -34,7 +34,7 @@ and open the template in the editor.
           <p><span class="rotulo"><label for="masc">Sexo</label></span><span class="campo">
             <input type="radio" name="sexo" id="masc" checked><label for="masc">M</label>
             <input type="radio" name="sexo" id="fem"><label for="fem">F</label></span></p>
-          <p><span class="rotulo"><label for="endereco">EndereÃ§o</label></span><span class="campo"><input type="text" id="endereco"></span></p>
+          <p><span class="rotulo"><label for="endereco">Endereço</label></span><span class="campo"><input type="text" id="endereco"></span></p>
           <p><span class="rotulo"><label for="cidade">Cidade</label></span><span class="campo"><input type="text" id="cidade"></span></p>
           <p><span class="rotulo"><label for="estado">Estado</label></span><span class="campo"><input type="text" id="estado"></span></p>
           <p><span class="rotulo"><label for="rota">Rota</label></span><span class="campo">
@@ -100,10 +100,10 @@ and open the template in the editor.
           }
         });
         
-        // fazendo o submit
-        $('#cadastrar').click(function(){
-          window.alert('Cadastro efetuado com sucesso!');
-        });
+        //fazendo o submit
+        //$('#cadastrar').click(function(){
+        //  window.alert('Cadastro efetuado com sucesso!');
+        //});
       });
     </script>
   </body>
