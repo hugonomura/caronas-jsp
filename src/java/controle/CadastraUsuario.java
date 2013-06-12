@@ -97,8 +97,10 @@ public class CadastraUsuario extends HttpServlet {
             rd.forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(CadastraUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ServletException();
         } catch (CaronasDAOException ex) {
             Logger.getLogger(CadastraUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ServletException();
         }
         
     }
