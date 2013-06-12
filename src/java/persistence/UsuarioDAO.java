@@ -19,10 +19,15 @@ public class UsuarioDAO {
     }
     
     public void salvar(Usuario u) throws SQLException{
-        Statement stmt = conn.createStatement();
-        stmt.executeUpdate("INSERT INTO disciplinabd.dbo.usuario"
-                + "(usuario, tipo) VALUES('" + u.getUsuario() + "', '" +
-                u.getTipo() + "')");
+        PreparedStatement ps;
+        String SQL = "INSERT INTO disciplinabd.dbo.usuario"
+                + "(username, email, senha) VALUES('" + 
+                u.getUsuario() + "', '" +
+                u.getEmail()+ "', '" +
+                u.getTipo() + "')";
+        ps = conn.prepareStatement(SQL);
+        
+        ps.executeUpdate();
     }
     
 }

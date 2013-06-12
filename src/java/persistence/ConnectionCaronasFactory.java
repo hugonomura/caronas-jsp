@@ -6,8 +6,8 @@ package persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 /**
  *
@@ -19,7 +19,7 @@ public class ConnectionCaronasFactory {
         try {
             Class.forName("com.microsoft.jdbc.sqlserver.SQLServerDriver").newInstance();
             String conexao = "jdbc:sqlserver://shelton.sor.ufscar.br:1433;database=disciplinabd";
-            String usuario = "professorbd", senha = "professorbd";
+            String usuario = "", senha = "";
             Connection conn = DriverManager.getConnection(conexao, usuario, senha);
             return conn;
         } catch (Exception e) {
@@ -27,13 +27,13 @@ public class ConnectionCaronasFactory {
         }
     }
 
-    public static void closeConnection(Connection conn, Statement stmt, ResultSet rs) throws CaronasDAOException {
-        close(conn, stmt, rs);
+    public static void closeConnection(Connection conn, PreparedStatement ps, ResultSet rs) throws CaronasDAOException {
+        close(conn, ps, rs);
     }
 
-    public static void closeConnection(Connection conn, Statement stmt)
+    public static void closeConnection(Connection conn, PreparedStatement ps)
             throws CaronasDAOException {
-        close(conn, stmt, null);
+        close(conn, ps, null);
     }
 
     public static void closeConnection(Connection conn)
@@ -41,14 +41,14 @@ public class ConnectionCaronasFactory {
         close(conn, null, null);
     }
 
-    private static void close(Connection conn, Statement stmt, ResultSet rs)
+    private static void close(Connection conn, PreparedStatement ps, ResultSet rs)
             throws CaronasDAOException {
         try {
             if (rs != null) {
                 rs.close();
             }
-            if (stmt != null) {
-                stmt.close();
+            if (ps != null) {
+                ps.close();
             }
             if (conn != null) {
                 conn.close();

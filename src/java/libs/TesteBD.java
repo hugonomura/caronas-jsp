@@ -23,7 +23,7 @@ public class TesteBD {
         try {
             Class.forName("com.microsoft.jdbc.sqlserver.SQLServerDriver").newInstance();
             String conexao = "jdbc:sqlserver://shelton.sor.ufscar.br:1433;database=disciplinabd";
-            String usuario = "professorbd", senha = "professorbd";
+            String usuario = "", senha = "";
             conn = DriverManager.getConnection(conexao, usuario, senha);
             stmt = conn.createStatement();
 
