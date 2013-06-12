@@ -18,7 +18,7 @@ public class ConnectionCaronasFactory {
     public static Connection getConnection() throws CaronasDAOException {
         try {
             Class.forName("com.microsoft.jdbc.sqlserver.SQLServerDriver").newInstance();
-            String conexao = "jdbc:sqlserver://shelton.sor.ufscar.br:1433;database=disciplinabd";
+            String conexao = "jdbc:sqlserver://192.168.12.4:1433;database=disciplinabd";
             String usuario = "", senha = "";
             Connection conn = DriverManager.getConnection(conexao, usuario, senha);
             return conn;
