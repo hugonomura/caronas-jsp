@@ -47,21 +47,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     String login = request.getParameter("login");
     String senha = request.getParameter("senha");
 
-    if(login.equals(senha)){
-
-              //vinculo o bean
-
-              Usuario objUsuario=new Usuario();
-              objUsuario.setUsuario(login);
-
-              // vincula bean
-              request.setAttribute("usuarioBean",objUsuario);
-
-              RequestDispatcher rd = null;
-              rd = request.getRequestDispatcher("/viewLogado.jsp");
-              rd.forward(request, response);
-    }
-    response.sendRedirect("index.jsp");
+    
 }
   
 
