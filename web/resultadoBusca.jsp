@@ -19,7 +19,7 @@
         <section class="container">
           <article id="form">
             <header>
-              <h1>Resultado da busca por: </h1>
+                <h1>Resultado da busca por: <%= request.getParameter("nomeCidade") %></h1>
             </header>
             
           </article>
