@@ -87,6 +87,8 @@ public class CadastraUsuario extends HttpServlet {
         u.setTipo("user");
         u.setEmail(request.getParameter("email"));
         u.setSenha(request.getParameter("senha"));
+        u.setCidade(request.getParameter("sexo"));
+        u.setSexo(request.getParameter("cidade"));
         
         try {
             UsuarioDAO uDAO = new UsuarioDAO();

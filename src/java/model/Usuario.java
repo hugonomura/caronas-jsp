@@ -13,6 +13,24 @@ public class Usuario {
     private String tipo;
     private String senha;
     private String email;
+    private String cidade;
+    private String sexo;
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
     
     public String getSenha() {
         return senha;

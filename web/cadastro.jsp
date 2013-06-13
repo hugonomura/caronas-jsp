@@ -28,8 +28,8 @@
           <p><span class="rotulo"><label for="conf-pwd">Confirmar senha</label></span><span class="campo"><input type="password" id="conf-pwd"></span></p>
           <p><span class="rotulo"><label for="dt-nto">Data de nascimento</label></span><span class="campo"><input type="date" id="dt-nto"></span></p>
           <p><span class="rotulo"><label for="masc">Sexo</label></span><span class="campo">
-            <input type="radio" name="sexo" id="masc" checked><label for="masc">M</label>
-            <input type="radio" name="sexo" id="fem"><label for="fem">F</label></span></p>
+            <input type="radio" name="sexo" value="masc" id="masc" checked><label for="masc">M</label>
+            <input type="radio" name="sexo" value="fem" id="fem"><label for="fem">F</label></span></p>
           <p><span class="rotulo"><label for="endereco">Endereço</label></span><span class="campo"><input type="text" id="endereco"></span></p>
           <p><span class="rotulo"><label for="estado">Estado</label></span><span class="campo">
             <select name="estado" id="estado">
