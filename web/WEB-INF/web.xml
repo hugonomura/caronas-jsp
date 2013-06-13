@@ -12,6 +12,10 @@
         <servlet-name>CadastraUsuario</servlet-name>
         <servlet-class>controle.CadastraUsuario</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BuscaUsuarios</servlet-name>
+        <servlet-class>controle.BuscaUsuarios</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EfetuaLogin</servlet-name>
         <url-pattern>/EfetuaLogin</url-pattern>
@@ -24,13 +28,17 @@
         <servlet-name>CadastraUsuario</servlet-name>
         <url-pattern>/CadastraUsuario</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BuscaUsuarios</servlet-name>
+        <url-pattern>/BuscaUsuarios</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <error-page>
-		<exception-type>java.lang.Throwable</exception-type>
-		<location>/error.jsp</location>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/error.jsp</location>
     </error-page>
 </web-app>

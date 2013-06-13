@@ -1,9 +1,7 @@
  <!DOCTYPE html>
- <%@page import="model.Usuario" %>
- <%@page import="persistence.UsuarioDAO" %>
     <html>
       <head>
-        <title>Caronas | Inicio</title>
+        <title>Caronas | Busca</title>
         <meta charset="UTF-8">
         <link rel="stylesheet" type="text/css" href="estilo.css">
         <script src="jquery.min.js"></script>
@@ -21,15 +19,12 @@
         <section class="container">
           <article id="form">
             <header>
-              <h1>Login</h1>
+              <h1>Busca</h1>
             </header>
-              <form method="get" action="BuscaUsuario">
-              <p><label for="nomeCidade">Login</label><input type="text" id="nomeCidade" name="nomeCidade"></p>
-              <p><input type="button" id="busca"value="Buscar"></p>
+              <form method="get" action="BuscaUsuarios">
+              <p><label for="nomeCidade">Cidade</label><input type="text" id="nomeCidade" name="nomeCidade"></p>
+              <p><input type="submit" id="busca"value="Buscar"></p>
             </form>
-          </article>
-          <article id="resultado">
-              
           </article>
         </section>
         <footer class="container">
